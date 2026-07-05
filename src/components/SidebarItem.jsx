@@ -1,9 +1,12 @@
-function SidebarItem({label, children}) {
+import {NavLink} from "react-router-dom";
+
+function SidebarItem({label, destination, children}) {
     return (
-        <li className="flex items-center p-3 hover:bg-overlay hover:rounded-xl hover:transition-all cursor-pointer">
+        <NavLink className="flex items-center p-3 hover:bg-overlay hover:rounded-xl hover:transition-all cursor-pointer"
+                 to={destination}>
             {children}
             {label}
-        </li>
+        </NavLink>
     );
 }
 
