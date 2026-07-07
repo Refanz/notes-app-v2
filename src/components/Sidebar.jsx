@@ -3,7 +3,7 @@ import SidebarItem from "./SidebarItem.jsx";
 
 function Sidebar() {
     return (
-        <div className="bg-primary md:w-64 flex flex-col p-4 gap-5">
+        <div className="bg-primary min-w-64 min-h-screen flex flex-col p-4 gap-5">
             <div className="flex items-center text-white cursor-pointer">
                 <BiNote className="text-4xl mr-2"/>
                 <h1 className="text-2xl font-semibold">Catat Yuk!</h1>

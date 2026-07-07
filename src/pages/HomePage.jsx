@@ -1,6 +1,8 @@
-import {archiveNote, getActiveNotes} from "../utils/local-data.js";
+import {archiveNote, deleteNote, getActiveNotes} from "../utils/local-data.js";
 import NoteCard from "../components/NoteCard.jsx";
 import React from "react";
+import EmptyNote from "../components/EmptyNote.jsx";
+import {showDeletedNoteAlert, showDeleteNoteAlert} from "../utils/note-alert.js";
 
 class HomePage extends React.Component {
 
@@ -12,6 +14,7 @@ class HomePage extends React.Component {
         };
 
         this.handleArchiveNote = this.handleArchiveNote.bind(this);
+        this.handleDeleteNote = this.handleDeleteNote.bind(this);
     }
 
     handleArchiveNote(id) {
@@ -24,19 +27,39 @@ class HomePage extends React.Component {
         });
     }
 
+    async handleDeleteNote(id) {
+        const isDelete = await showDeleteNoteAlert();
+
+        if (isDelete) {
+            deleteNote(id);
+            showDeletedNoteAlert();
+
+            this.setState(() => {
+                return {
+                    notes: getActiveNotes(),
+                }
+            })
+        }
+    }
+
     render() {
         return (
             <section className="flex flex-col gap-10">
                 <h1 className="text-2xl font-bold">My Notes</h1>
-                <div className="grid grid-cols-3 gap-4">
-                    {
-                        this.state.notes.map((note, index) => {
-                            return (
-                                <NoteCard key={index} note={note} archiveNote={() => this.handleArchiveNote(note.id)} />
-                            )
-                        })
-                    }
-                </div>
+                {
+                    this.state.notes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
+                        {
+                            this.state.notes.map((note, index) => {
+                                return (
+                                    <NoteCard key={index} note={note}
+                                              archiveNote={this.handleArchiveNote}
+                                              deleteNote={this.handleDeleteNote}
+                                    />
+                                )
+                            })
+                        }
+                    </div> : <EmptyNote/>
+                }
             </section>
         )
     }
