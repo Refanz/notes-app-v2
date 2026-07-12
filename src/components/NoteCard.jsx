@@ -2,9 +2,23 @@ import IconButton from "./IconButton.jsx";
 import {BiArchiveIn, BiInfoCircle, BiPencil, BiTrash} from "react-icons/bi";
 import {useNavigate} from "react-router-dom";
 import parse from "html-react-parser";
-import {parseDate} from "../utils/util.js";
+import {J, parseDate, validateProps} from "../utils/utils.js";
 
-function NoteCard({note, archiveNote, deleteNote}) {
+const noteCardPropsSchema = J.object({
+    note: J.object({
+        id: J.string().required(),
+        title: J.string().required(),
+        body: J.string().required(),
+        createdAt: J.string().isoDate().required(),
+        archived: J.boolean().required(),
+    }),
+    archiveNote: J.func().required(),
+    deleteNote: J.func().required(),
+});
+
+function NoteCard(props) {
+
+    const {note, archiveNote, deleteNote} = validateProps(noteCardPropsSchema, props, "NoteCard");
 
     const navigate = useNavigate();
 

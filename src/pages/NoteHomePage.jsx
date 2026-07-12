@@ -1,8 +1,7 @@
 import {archiveNote, deleteNote, getActiveNotes, searchNotesByTitle} from "../utils/local-data.js";
-import NoteCard from "../components/NoteCard.jsx";
 import React from "react";
-import EmptyNote from "../components/EmptyNote.jsx";
 import {showDeletedNoteAlert, showDeleteNoteAlert} from "../utils/note-alert.js";
+import NoteList from "../components/NoteList.jsx";
 
 class NoteHomePage extends React.Component {
 
@@ -48,20 +47,8 @@ class NoteHomePage extends React.Component {
         return (
             <section className="flex flex-col gap-10">
                 <h1 className="text-2xl font-bold">My Notes</h1>
-                {
-                    currentNotes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
-                        {
-                            currentNotes.map((note, index) => {
-                                return (
-                                    <NoteCard key={index} note={note}
-                                              archiveNote={this.handleArchiveNote}
-                                              deleteNote={this.handleDeleteNote}
-                                    />
-                                )
-                            })
-                        }
-                    </div> : <EmptyNote/>
-                }
+                <NoteList notes={currentNotes} onArchiveNote={this.handleArchiveNote}
+                          onDeleteNote={this.handleDeleteNote}/>
             </section>
         )
     }

@@ -5,6 +5,8 @@ import {addNote} from "../utils/local-data.js";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import showToast from "../utils/note-toast.js";
+import {J, validateProps} from "../utils/utils.js";
+import parse from "html-react-parser";
 
 function AddNewNotePageWrapper() {
 
@@ -32,14 +34,21 @@ function AddNewNotePageWrapper() {
     )
 }
 
+const addNewNotePagePropsSchema = J.object({
+    handleSubmit: J.func().required(),
+});
+
 class AddNewNotePage extends React.Component {
 
     constructor(props) {
         super(props);
 
+        const validatedProps = validateProps(addNewNotePagePropsSchema, props, "AddNewNotePage");
+
         this.state = {
             title: "",
             body: "",
+            validatedProps,
         };
 
         this.onChangeTitleHandler = this.onChangeTitleHandler.bind(this);
@@ -66,9 +75,11 @@ class AddNewNotePage extends React.Component {
     onSubmitHandler(event) {
         event.preventDefault();
 
-        this.props.handleSubmit({
+        const {handleSubmit} = this.state.validatedProps;
+
+        handleSubmit({
             title: this.state.title,
-            body: this.state.body,
+            body: parse(this.state.body),
         });
     }
 

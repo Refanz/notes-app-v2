@@ -1,8 +1,7 @@
 import {deleteNote, getArchivedNotes, searchNotesByTitle, unarchiveNote} from "../utils/local-data.js";
-import ArchivedNoteCard from "../components/ArchivedNoteCard.jsx";
 import React from "react";
-import EmptyNote from "../components/EmptyNote.jsx";
 import {showDeletedNoteAlert, showDeleteNoteAlert} from "../utils/note-alert.js";
+import ArchiveNoteList from "../components/ArchiveNoteList.jsx";
 
 class ArchivedNotesPage extends React.Component {
 
@@ -24,7 +23,7 @@ class ArchivedNotesPage extends React.Component {
             return {
                 notes: getArchivedNotes()
             }
-        })
+        });
     }
 
     async handleDeleteNote(id) {
@@ -38,7 +37,7 @@ class ArchivedNotesPage extends React.Component {
                 return {
                     notes: getArchivedNotes(),
                 }
-            })
+            });
         }
     }
 
@@ -49,20 +48,8 @@ class ArchivedNotesPage extends React.Component {
         return (
             <section className="flex flex-col gap-10">
                 <h1 className="text-2xl font-bold">Archived Notes</h1>
-                {
-                    currentNotes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
-                        {
-                            currentNotes.map((note, index) => {
-                                return (
-                                    <ArchivedNoteCard note={note} key={index}
-                                                      unarchiveNote={() => this.handleUnarchiveNote(note.id)}
-                                                      handleDeleteNote={this.handleDeleteNote}
-                                    />
-                                )
-                            })
-                        }
-                    </div> : <EmptyNote/>
-                }
+                <ArchiveNoteList notes={currentNotes} onUnarchiveNote={this.handleUnarchiveNote}
+                                 onDeleteNote={this.handleDeleteNote}/>
             </section>
         )
     }

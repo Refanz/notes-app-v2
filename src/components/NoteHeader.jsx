@@ -1,8 +1,16 @@
 import {useNavigate} from "react-router-dom";
 import {BiPlus} from "react-icons/bi";
 import NoteSearchBar from "./NoteSearchBar.jsx";
+import {J, validateProps} from "../utils/utils.js";
 
-function NoteHeader({searchQuery, handleSearchNotes}) {
+const noteHeaderPropsSchema = J.object({
+    searchQuery: J.string().allow(null, ""),
+    handleSearchNotes: J.func(),
+});
+
+function NoteHeader(props) {
+    const {searchQuery, handleSearchNotes} = validateProps(noteHeaderPropsSchema, props, "NoteHeader");
+
     const navigate = useNavigate();
 
     return (

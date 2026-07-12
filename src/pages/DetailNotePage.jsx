@@ -1,6 +1,7 @@
 import {useParams} from "react-router-dom";
 import {getNote} from "../utils/local-data.js";
-import {parseDate} from "../utils/util.js";
+import {parseDate} from "../utils/utils.js";
+import parse from "html-react-parser";
 
 function DetailNotePage() {
     const {id} = useParams();
@@ -15,7 +16,9 @@ function DetailNotePage() {
                 </div>
                 <div className="flex flex-col gap-4">
                     <h2 className="text-2xl font-bold">{title}</h2>
-                    <p>{body}</p>
+                    {
+                        parse(body)
+                    }
                     <p className="self-end">{parseDate(createdAt)}</p>
                 </div>
             </div>
