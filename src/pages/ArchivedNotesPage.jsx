@@ -1,4 +1,4 @@
-import {deleteNote, getActiveNotes, getArchivedNotes, unarchiveNote} from "../utils/local-data.js";
+import {deleteNote, getArchivedNotes, searchNotesByTitle, unarchiveNote} from "../utils/local-data.js";
 import ArchivedNoteCard from "../components/ArchivedNoteCard.jsx";
 import React from "react";
 import EmptyNote from "../components/EmptyNote.jsx";
@@ -43,13 +43,16 @@ class ArchivedNotesPage extends React.Component {
     }
 
     render() {
+        const currentNotes = this.props.searchNotesKeyword ? searchNotesByTitle(this.props.searchNotesKeyword, true)
+            : this.state.notes;
+
         return (
             <section className="flex flex-col gap-10">
                 <h1 className="text-2xl font-bold">Archived Notes</h1>
                 {
-                    this.state.notes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
+                    currentNotes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
                         {
-                            this.state.notes.map((note, index) => {
+                            currentNotes.map((note, index) => {
                                 return (
                                     <ArchivedNoteCard note={note} key={index}
                                                       unarchiveNote={() => this.handleUnarchiveNote(note.id)}

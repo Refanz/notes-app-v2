@@ -1,10 +1,10 @@
-import {archiveNote, deleteNote, getActiveNotes} from "../utils/local-data.js";
+import {archiveNote, deleteNote, getActiveNotes, searchNotesByTitle} from "../utils/local-data.js";
 import NoteCard from "../components/NoteCard.jsx";
 import React from "react";
 import EmptyNote from "../components/EmptyNote.jsx";
 import {showDeletedNoteAlert, showDeleteNoteAlert} from "../utils/note-alert.js";
 
-class HomePage extends React.Component {
+class NoteHomePage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -43,13 +43,15 @@ class HomePage extends React.Component {
     }
 
     render() {
+        const currentNotes = this.props.searchNotesKeyword ? searchNotesByTitle(this.props.searchNotesKeyword) : this.state.notes;
+
         return (
             <section className="flex flex-col gap-10">
                 <h1 className="text-2xl font-bold">My Notes</h1>
                 {
-                    this.state.notes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
+                    currentNotes.length !== 0 ? <div className="grid grid-cols-3 gap-4">
                         {
-                            this.state.notes.map((note, index) => {
+                            currentNotes.map((note, index) => {
                                 return (
                                     <NoteCard key={index} note={note}
                                               archiveNote={this.handleArchiveNote}
@@ -65,4 +67,4 @@ class HomePage extends React.Component {
     }
 }
 
-export default HomePage;
+export default NoteHomePage;

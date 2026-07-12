@@ -3,14 +3,28 @@ import FormattedTextArea from "../components/FormattedTextArea.jsx";
 import React from "react";
 import {addNote} from "../utils/local-data.js";
 import {useNavigate} from "react-router-dom";
+import toast from "react-hot-toast";
+import showToast from "../utils/note-toast.js";
 
 function AddNewNotePageWrapper() {
 
     const navigate = useNavigate();
 
     function handleSubmit({title, body}) {
-        addNote({title, body})
-        navigate("/")
+
+        if (!title || !body) {
+            showToast({
+                message: "Fill all the fields",
+                type: "error",
+            });
+            return;
+        }
+
+        addNote({title, body});
+        toast.success("Note added successfully", {
+            position: "top-right",
+        });
+        navigate("/");
     }
 
     return (
