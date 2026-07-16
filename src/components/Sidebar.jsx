@@ -1,5 +1,6 @@
-import {BiNote, BiNotepad, BiPencil, BiSolidNote} from "react-icons/bi";
-import SidebarItem from "./SidebarItem.jsx";
+import {BiNote, BiNotepad, BiPencil, BiSolidArrowToLeft, BiSolidNote} from "react-icons/bi";
+import SidebarItemIcon from "./SidebarItemIcon.jsx";
+import TextIconButton from "./TextIconButton.jsx";
 
 function Sidebar() {
     return (
@@ -10,15 +11,20 @@ function Sidebar() {
             </div>
             <nav className="text-white">
                 <ul className="flex flex-col gap-1">
-                    <SidebarItem label="My Notes" destination="/">
+                    <SidebarItemIcon label="My Notes" destination="/">
                         <BiNotepad className="text-2xl mr-2"/>
-                    </SidebarItem>
-                    <SidebarItem label="Add Note" destination="/add-note">
+                    </SidebarItemIcon>
+                    <SidebarItemIcon label="Add Note" destination="/add-note">
                         <BiPencil className="text-2xl mr-2"/>
-                    </SidebarItem>
-                    <SidebarItem label="Archived Notes" destination="/archived-notes">
+                    </SidebarItemIcon>
+                    <SidebarItemIcon label="Archived Notes" destination="/archived-notes">
                         <BiSolidNote className="text-2xl mr-2"/>
-                    </SidebarItem>
+                    </SidebarItemIcon>
+                    <li className="p-2 mt-20 border-t">
+                        <TextIconButton onClick={() => {}} label="Logout" isReverse={true}>
+                            <BiSolidArrowToLeft className="text-2xl mr-2"/>
+                        </TextIconButton>
+                    </li>
                 </ul>
             </nav>
         </div>

@@ -7,9 +7,9 @@ const sideBarItemPropsSchema = J.object({
     children: J.any().required(),
 })
 
-function SidebarItem(props) {
+function SidebarItemIcon(props) {
 
-    const {label, destination, children} = validateProps(sideBarItemPropsSchema, props, "SidebarItem");
+    const {label, destination, children} = validateProps(sideBarItemPropsSchema, props, "SidebarItemIcon");
 
     return (
         <NavLink className="flex items-center p-3 hover:bg-overlay hover:rounded-xl hover:transition-all cursor-pointer"
@@ -20,4 +20,4 @@ function SidebarItem(props) {
     );
 }
 
-export default SidebarItem;
+export default SidebarItemIcon;
